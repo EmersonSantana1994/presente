@@ -3,14 +3,14 @@ import React, { useState, useEffect } from 'react';/*eslint-disable*/
 
 import "../src/garota.css";
 
-import {foto1}  from '../../garota/src/img/alternanciaIcones'
-import {foto2}  from '../../garota/src/img/alternanciaIcones'
-import {foto3}  from '../../garota/src/img/alternanciaIcones'
-import {foto4}  from '../../garota/src/img/alternanciaIcones'
-import {foto5}  from '../../garota/src/img/alternanciaIcones'
-import {foto6}  from '../../garota/src/img/alternanciaIcones'
-import {foto7}  from '../../garota/src/img/alternanciaIcones'
-import {foto8}  from '../../garota/src/img/alternanciaIcones'
+import {foto1}  from '../../garota/src/alternanciaIcones'
+import {foto2}  from '../../garota/src/alternanciaIcones'
+import {foto3}  from '../../garota/src/alternanciaIcones'
+import {foto4}  from '../../garota/src/alternanciaIcones'
+import {foto5}  from '../../garota/src/alternanciaIcones'
+import {foto6}  from '../../garota/src/alternanciaIcones'
+import {foto7}  from '../../garota/src/alternanciaIcones'
+import {foto8}  from '../../garota/src/alternanciaIcones'
 
 
 import {
