@@ -1,0 +1,15 @@
+@media only screen and (min-width: 1170px) {
+    .vertical-timeline--two-columns .vertical-timeline-element-content {
+        margin-left: 0;
+        padding: 1.5em;
+        width: 100%;
+    }
+}
+
+
+.campodepesquisa{
+    
+        width: 500px;
+        height: 61px;
+        font-size: 30px;
+}
