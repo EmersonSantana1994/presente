@@ -38,7 +38,7 @@ export default function Pergunta2() {
 
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
-            setMudarp2(true);
+            setEnvioModal(true);
         }
     };
 

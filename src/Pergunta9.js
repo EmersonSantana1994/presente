@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';/*eslint-disable*/
-import { ReactComponent as WorkIcon } from "../../../garota/garota/src/img/work.svg";
-import { ReactComponent as SchoolIcon } from "../../../garota/garota/src/img/school.svg";
+
 
 import "../src/garota.css";
 
@@ -32,7 +31,7 @@ function TimeLine() {
         foto1(),
       buttonText: "",
       date: "A mais linda",
-      icon: "work",
+      icon: "",
     },
     {
       id: 2,
@@ -41,8 +40,8 @@ function TimeLine() {
       description:
       foto2(),
       buttonText: "",
-      date: "inteligente",
-      icon: "work",
+      date: "inteligente <---------",
+      icon: "",
     },
     {
       id: 3,
@@ -52,7 +51,7 @@ function TimeLine() {
       foto3(),
       buttonText: "",
       date: "iluminada",
-      icon: "work",
+      icon: "",
     },
     {
       id: 4,
@@ -61,8 +60,8 @@ function TimeLine() {
       description:
       foto4(),
       buttonText: "",
-      date: "determinada",
-      icon: "school",
+      date: "determinada <---------",
+      icon: "",
     },
     {
       id: 5,
@@ -72,7 +71,7 @@ function TimeLine() {
       foto5(),
       buttonText: "",
       date: "divertida",
-      icon: "school",
+      icon: "",
     },
     {
       id: 6,
@@ -80,8 +79,8 @@ function TimeLine() {
       location: "Dragontail, Ascana",
       description:
       foto6(),
-      date: "gostosa",
-      icon: "school",
+      date: "gostosa <-------",
+      icon: "",
     },
     {
         id: 7,
@@ -90,7 +89,7 @@ function TimeLine() {
         description:
         foto7(),
         date: "incrível",
-        icon: "school",
+        icon: "",
       },
       {
         id: 7,
@@ -98,8 +97,8 @@ function TimeLine() {
         location: "Dragontail, Ascana",
         description:
         foto8(),
-        date: "flavia",
-        icon: "school",
+        date: "Flavia <-------",
+        icon: "",
       },
   ];
   
@@ -111,7 +110,7 @@ function TimeLine() {
       <h1 className="titlee">Apresento a mais linda</h1>
       <VerticalTimeline>
         {timelineElements.map((element) => {
-          let isWorkIcon = element.icon === "work";
+          
           let showButton =
             element.buttonText !== undefined &&
             element.buttonText !== null &&
@@ -122,8 +121,7 @@ function TimeLine() {
               key={element.key}
               date={element.date}
               dateClassName="date"
-              iconStyle={isWorkIcon ? workIconStyles : schoolIconStyles}
-              icon={isWorkIcon ? <WorkIcon /> : <SchoolIcon />}
+             
             >
               <h3 className="vertical-timeline-element-title">
                 {element.title}
@@ -134,9 +132,7 @@ function TimeLine() {
               <img className="campo-select-icone-ativado" src={element.description} alt="drop" />
               {showButton && (
                 <a
-                  className={`button ${
-                    isWorkIcon ? "workButton" : "schoolButton"
-                  }`}
+                 
                   href="/"
                 >
                   {element.buttonText}
