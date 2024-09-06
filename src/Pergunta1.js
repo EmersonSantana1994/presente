@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';/*eslint-disable*/
-import {foto1}  from '../../garota/src/img/alternanciaIcones'
-import {
-    VerticalTimeline,
-    VerticalTimelineElement,
-} from "react-vertical-timeline-component";
+
+
 
 import Pergunta2 from "../src/Pergunta2";
 
