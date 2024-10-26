@@ -1,0 +1,122 @@
+Agendamento
+
+
+Medico
+
+precisa, cadastrar data e hora que pode realizar consultas naquele dia, lembrando que tem que escolher a sala (serão 3 salas) e tbm terão horários desta sala... ou seja o medico vai la
+e diz que vai ter horários diponiveis se caso aquela sala tiver estes horários disponíveis
+
+
+Paciente
+
+vai entrar no sistema e agendar um horário e verificar horários diponiveis --> isso sera feito pelo app porém é importanto ter isso em sistema tbm caso alguém precise marcar consultas 
+caso acontece uma remarcação e agenda
+
+
+Triagem/Questionario
+
+São as perguntas feitas em recepção e triagem, precisa ser customizado, ou seja um sistema de questionário que o usuário administrativo parametriza quantas perguntas e quais perguntas
+serão feitas, é preciso fazer o logue do momento que é aberto a nova triagem e é fechado ela, os dados deste questionário irão para o prontuário deste paciente
+
+
+Consulta
+
+É preciso um campo de texto para o médco escrever, o nome do procedimento e a data mencionda e a data do sistema sera enviada tudo ao banco de dados, o logue de abertura da consulta e fechamento tbm deverão estar registrados, data de retorno precisa ser informada e registrada no banco
+
+Exame
+
+o exame sera feito na clinica e enviado ao fliori deve ter um lugar que diga que foi enviado este exame para ter contro se o feori retornou ou não o exame depois de tantos dias....
+é preciso ter um campo que vc armazene um arquivo de um resultado deste exame dentro do sistema
+
+
+Video conferencia
+
+Por ultimo é feito a videoconferência no retorno do paciente ao medico (em tese isso esra no app)
+
+color: "#e4ff1a"desc
+: 
+"Nelson"
+end
+: 
+"2024-09-11T17:30"
+start
+: 
+"2024-09-11T13:30"
+tipo
+: 
+"consulta"
+title
+: 
+"Atendimento"
+
+CREATE TABLE IF NOT EXISTS eventos(id bigint unsigned not null AUTO_INCREMENT, start DATETIME, 
+end DATETIME, `desc` VARCHAR(600), color VARCHAR(255), tipo VARCHAR(255),
+id_consultorio bigint unsigned not null, id_medico bigint unsigned not null, 
+id_repetir bigint unsigned not null, id_especialidade int unsigned not null,
+index ev_me_index(id_medico), index ev_so_index(id_consultorio), index ev_se_index(id_repetir), index ev_es_index(id_especialidade), 
+foreign key (id_consultorio) references consultorios(id_consultorio) on delete cascade,
+foreign key (id_medico) references medico(id_medico) on delete cascade, 
+foreign key (id_repetir) references eventosrepetir(id_repetir) on delete cascade, 
+foreign key (id_especialidade) references especialidade(id_especialidade) on delete cascade, PRIMARY KEY (id));
+
+CREATE TABLE questionario(id_questionario bigint unsigned not null AUTO_INCREMENT, 
+nomeQuestionario varchar(300) not null,
+id_usuario  int not null,   
+dataDeAdicao DATETIME DEFAULT CURRENT_TIMESTAMP,
+PRIMARY KEY (id_questionario));
+
+CREATE TABLE questoes (
+    id_questao  bigint unsigned not null AUTO_INCREMENT PRIMARY KEY,
+    text VARCHAR(500),
+    title VARCHAR(255),
+    type VARCHAR(50),
+    id_questionario bigint unsigned not null,
+    index qu__q_index(id_questionario), 
+foreign key (id_questionario) references questionario(id_questionario) on delete cascade
+);
+
+CREATE TABLE perguntas(id_pergunta bigint unsigned not null AUTO_INCREMENT, 
+options varchar(550),   
+id_questao bigint unsigned not null,
+index qu__pe_index(id_questao), 
+foreign key (id_questao) references questoes(id_questao) on delete cascade, 
+PRIMARY KEY (id_pergunta));
+
+
+CREATE TABLE IF NOT EXISTS respostas(id_resposta bigint unsigned not null AUTO_INCREMENT, resposta varchar(800), 
+id_questao bigint unsigned not null, id_pacliente bigint unsigned not null, index res_pe_index(id_questao), index res_pa_index(id_pacliente),
+foreign key (id_questao)  references questoes(id_questao) on delete cascade, 
+foreign key (id_pacliente)  references pacliente(id_pacliente) on delete cascade, 
+PRIMARY KEY (id_resposta));
+
+select q.text, r.resposta, p.nome, q.type  from respostas r
+left join questoes q on q.id_questao = r.id_questao
+left join pacliente p on p.id_pacliente = r.id_pacliente
+
+
+CREATE TABLE IF NOT EXISTS consulta(id_consulta bigint unsigned not null AUTO_INCREMENT, 
+id_pacliente bigint unsigned not null, ativo TINYINT(1) NOT NULL, dataAbertura DATETIME DEFAULT CURRENT_TIMESTAMP,
+dataEncerrada DATETIME ON UPDATE CURRENT_TIMESTAMP,
+index co_pa_index(id_pacliente), foreign key (id_pacliente)  references pacliente(id_pacliente) on delete cascade, 
+PRIMARY KEY (id_consulta));
+
+
+CREATE TABLE IF NOT EXISTS prontuario(id_prontuario bigint unsigned not null AUTO_INCREMENT, 
+id_pacliente bigint unsigned not null, id_medico bigint unsigned not null, anotacao LONGTEXT,  
+dataCriacao DATETIME DEFAULT CURRENT_TIMESTAMP, dataProcedimento DATE, dataRetorno DATE,
+index pro_pa_index(id_pacliente), index pro_me_index(id_medico), foreign key (id_pacliente)  
+references pacliente(id_pacliente) on delete cascade, foreign key (id_medico)  
+references medico(id_medico) on delete cascade, 
+PRIMARY KEY (id_prontuario));
+
+CREATE TABLE IF NOT EXISTS consulta_agendada(id_consultaAgendada bigint unsigned not null AUTO_INCREMENT, horario TIME, dataAgendada DATE,
+id_pacliente bigint unsigned not null, id_medico bigint unsigned not null, especialidade varchar(300) not null,
+dataCriacao DATETIME DEFAULT CURRENT_TIMESTAMP, 
+index pro_pa_index(id_pacliente), index pro_me_index(id_medico), foreign key (id_pacliente)  
+references pacliente(id_pacliente) on delete cascade, foreign key (id_medico)  
+references medico(id_medico) on delete cascade, 
+PRIMARY KEY (id_consultaAgendada));
+
+
+
+
